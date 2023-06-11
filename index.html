@@ -43,8 +43,6 @@
                     alert('Please type an appropriate response');
                 }
             }
-
-            
         }
 
         function playRound(playerSelection, computerSelection) {
@@ -52,8 +50,8 @@
             let playerWinOrLose = false;
 
             if (playerSelection === computerSelection) {
-                console.log('Match Draw!')
-                return;
+                console.log('Match Draw!');
+                return playerWinOrLose = null;
             }
             
             switch (playerSelection) {
@@ -72,12 +70,8 @@
                         playerWinOrLose = true;
                     }
                     break;
-                }
-            
-            winnerLoser(playerSelection, computerSelection, playerWinOrLose);
-        }
+            }
 
-        function winnerLoser(playerSelection, computerSelection, playerWinOrLose) {
             // prints out if player won or lost 
             if (playerWinOrLose === true) {
                 console.log(`Player wins! ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}!`);
@@ -85,17 +79,41 @@
             else {
                 console.log(`Computer wins! ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!`);
             }
+
+            return playerWinOrLose;
         }
-
-        const playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
-
-        console.log(playRound(playerSelection, computerSelection));
 
         function game() {
-        //     plays the game 
-        //     keeps score. first to 5 will win. 
+            // plays the game and keeps the score. First to 5 will win.
+            let playerScore = 0;
+            let computerScore = 0;
+
+            for (let i = 0; i < 5; i++) {
+                const playerSelection = getPlayerChoice();
+                const computerSelection = getComputerChoice();
+                let playerWinOrLose = playRound(playerSelection, computerSelection);
+                if (playerWinOrLose === true) {
+                    playerScore++;
+                }
+                else if (playerWinOrLose === false) {
+                    computerScore++;
+                }
+                console.log("Player Score: " + playerScore);
+                console.log("Computer Score: " + computerScore);
+            }
+
+            if (playerScore > computerScore) {
+                console.log("Final Result: Player wins!");
+            }
+            else if (playerScore < computerScore) {
+                console.log("Final Result: Computer wins!");
+            }
+            else {
+                console.log("Final Result: Match Draw!");
+            }
         }
+
+        game();
 
     </script>
 </body>
