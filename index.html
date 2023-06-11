@@ -23,7 +23,7 @@
                 computerChoice = 'scissors';
             }
 
-            console.log(computerChoice);
+            console.log('computer: ' + computerChoice);
 
             return computerChoice;
             
@@ -35,7 +35,7 @@
             while (keepGoing) {
                 let playerChoice = prompt('Choose between rock, paper or scissors: ', '').toLowerCase();
                 if ((playerChoice === 'rock') || (playerChoice === 'paper') || (playerChoice === 'scissors')) {
-                    console.log(playerChoice);
+                    console.log('player: ' + playerChoice);
                     keepGoing = false;
                     return playerChoice;
                 }
@@ -47,12 +47,46 @@
             
         }
 
-
-
         function playRound(playerSelection, computerSelection) {
-        // your code here!
+            // determines if draw, win or lose 
+            let playerWinOrLose = false;
+
+            if (playerSelection === computerSelection) {
+                console.log('Match Draw!')
+                return;
+            }
+            
+            switch (playerSelection) {
+                case 'rock':
+                    if (computerSelection === 'scissors') {
+                        playerWinOrLose = true;
+                    }
+                    break;
+                case 'paper':
+                    if (computerSelection === 'rock') {
+                        playerWinOrLose = true;
+                    }
+                    break;
+                case 'scissors': 
+                    if (computerSelection === 'paper') {
+                        playerWinOrLose = true;
+                    }
+                    break;
+                }
+            
+            winnerLoser(playerSelection, computerSelection, playerWinOrLose);
         }
- 
+
+        function winnerLoser(playerSelection, computerSelection, playerWinOrLose) {
+            // prints out if player won or lost 
+            if (playerWinOrLose === true) {
+                console.log(`Player wins! ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}!`);
+            }
+            else {
+                console.log(`Computer wins! ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!`);
+            }
+        }
+
         const playerSelection = getPlayerChoice();
         const computerSelection = getComputerChoice();
 
