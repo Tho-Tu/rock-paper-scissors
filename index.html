@@ -4,10 +4,62 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock paper scissors</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+    <h1> Rock-Paper-Scissors </h1>
+    <div> Choose your selection wisely...</div>
+    <div id="buttons">
+    <button type="button" id="btn1">Rock</button>
+    <button type="button" id="btn2">Paper</button>
+    <button type="button" id="btn3">Scissors</button>
+    </div>
+
+    <div id="player-selection">
+        Player Selection
+    </div>
+    <div id="computer-selection">
+        Computer selection
+    </div>
+    <div id="winner">
+        Who wins?
+    </div>
+
+    <div id="scores">
+        <div id="player-score">
+            <h3>player score</h3>
+        </div>
+        <div id="rounds">
+            <h3>rounds</h3></div>
+        <div id="computer-score">
+            <h3>computer score</h3>
+        </div>
+    </div>
+
+    <div id="final-winner"></div>
+
     <script>
+        const btn1 = document.querySelector('#btn1');
+        const btn2 = document.querySelector('#btn2');
+        const btn3 = document.querySelector('#btn3');
+
+        btn1.addEventListener('click', () => {
+            playRound('rock', getComputerChoice())
+        });
+        btn2.addEventListener('click', () => {
+            playRound('paper', getComputerChoice())
+        });
+        btn3.addEventListener('click', () => {
+            playRound('scissors', getComputerChoice())
+        });
+
+        const playerText = document.querySelector('#player-selection');
+        const computerText = document.querySelector('#computer-selection'); 
+        const winnerText = document.querySelector('#winner');
+
+        const finalWinner = document.querySelector('final-winner');
+
         function getComputerChoice() {
             // Selects random choice for the computer 
             const randomNumber = Math.floor(Math.random() * 3) + 1;
@@ -25,31 +77,38 @@
 
             console.log('computer: ' + computerChoice);
 
-            return computerChoice;
-            
+            return computerChoice; 
         }
 
-        function getPlayerChoice() {
-            // prompts player to choose between rock, paper or scissors
-            let keepGoing = true;
-            while (keepGoing) {
-                let playerChoice = prompt('Choose between rock, paper or scissors: ', '').toLowerCase();
-                if ((playerChoice === 'rock') || (playerChoice === 'paper') || (playerChoice === 'scissors')) {
-                    console.log('player: ' + playerChoice);
-                    keepGoing = false;
-                    return playerChoice;
-                }
-                else {
-                    alert('Please type an appropriate response');
-                }
-            }
-        }
+        // function getPlayerChoice() {
+        //     prompts player to choose between rock, paper or scissors
+        //     let keepGoing = true;
+        //     while (keepGoing) {
+        //         let playerChoice = prompt('Choose between rock, paper or scissors: ', '').toLowerCase();
+        //         if ((playerChoice === 'rock') || (playerChoice === 'paper') || (playerChoice === 'scissors')) {
+        //             console.log('player: ' + playerChoice);
+        //             keepGoing = false;
+        //             return playerChoice;
+        //         }
+        //         else {
+        //             alert('Please type an appropriate response');
+        //         }
+        //     }
+            
+            
+
+        // }
 
         function playRound(playerSelection, computerSelection) {
             // determines if draw, win or lose 
             let playerWinOrLose = false;
 
+            // prints player and computer selection
+            playerText.textContent =`You selected ${playerSelection}`;
+            computerText.textContent =`Computer selected ${computerSelection}`;
+
             if (playerSelection === computerSelection) {
+                winnerText.textContent = 'Match Draw!';
                 console.log('Match Draw!');
                 return playerWinOrLose = null;
             }
@@ -74,9 +133,11 @@
 
             // prints out if player won or lost 
             if (playerWinOrLose === true) {
+                winnerText.textContent = `Player wins! ${playerSelection} beats ${computerSelection}!`;
                 console.log(`Player wins! ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}!`);
             }
             else {
+                winnerText.textContent = `Computers wins! ${computerSelection} beats ${playerSelection}!`;
                 console.log(`Computer wins! ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!`);
             }
 
@@ -87,33 +148,35 @@
             // plays the game and keeps the score. First to 5 will win.
             let playerScore = 0;
             let computerScore = 0;
+    
+            // let playerWinOrLose = playRound(playerSelection, computerSelection);
+            if (playerWinOrLose === true) {
+                playerScore++;
+            }
+            else if (playerWinOrLose === false) {
+                computerScore++;
+            }
+            console.log("Player Score: " + playerScore);
+            console.log("Computer Score: " + computerScore);
 
-            for (let i = 0; i < 5; i++) {
-                const playerSelection = getPlayerChoice();
-                const computerSelection = getComputerChoice();
-                let playerWinOrLose = playRound(playerSelection, computerSelection);
-                if (playerWinOrLose === true) {
-                    playerScore++;
-                }
-                else if (playerWinOrLose === false) {
-                    computerScore++;
-                }
-                console.log("Player Score: " + playerScore);
-                console.log("Computer Score: " + computerScore);
-            }
+            
 
-            if (playerScore > computerScore) {
-                console.log("Final Result: Player wins!");
-            }
-            else if (playerScore < computerScore) {
-                console.log("Final Result: Computer wins!");
-            }
-            else {
-                console.log("Final Result: Match Draw!");
+            if (playerScore === 5 || computerScore === 5) {
+                if (playerScore > computerScore) {
+                    console.log("Final Result: Player wins!");
+                    finalWinner.textContent = "Final Result: Player wins!";
+                }
+                else if (playerScore < computerScore) {
+                    console.log("Final Result: Computer wins!");
+                    finalWinner.textContent = "Final Result: Computer wins!";
+                }
+                else {
+                    console.log("Final Result: Match Draw!");
+                }
             }
         }
 
-        game();
+        // game();
 
     </script>
 </body>
