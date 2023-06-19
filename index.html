@@ -28,21 +28,34 @@
 
     <div id="scores">
         <div id="player-score">
-            <h3>player score</h3>
+            player score
         </div>
-        <div id="rounds">
-            <h3>rounds</h3></div>
         <div id="computer-score">
-            <h3>computer score</h3>
+            computer score
         </div>
     </div>
 
     <div id="final-winner"></div>
 
     <script>
+
+        // Query selectors 
         const btn1 = document.querySelector('#btn1');
         const btn2 = document.querySelector('#btn2');
         const btn3 = document.querySelector('#btn3');
+
+        const playerText = document.querySelector('#player-selection');
+        const computerText = document.querySelector('#computer-selection'); 
+        const winnerText = document.querySelector('#winner');
+
+        const playerScoreCount = document.querySelector('#player-score');
+        const computerScoreCount = document.querySelector('#computer-score');
+
+        const finalWinner = document.querySelector('#final-winner');
+
+        // plays the game and keeps the score. First to 5 will win.
+        let playerScore = 0;
+        let computerScore = 0;
 
         btn1.addEventListener('click', () => {
             playRound('rock', getComputerChoice())
@@ -53,12 +66,6 @@
         btn3.addEventListener('click', () => {
             playRound('scissors', getComputerChoice())
         });
-
-        const playerText = document.querySelector('#player-selection');
-        const computerText = document.querySelector('#computer-selection'); 
-        const winnerText = document.querySelector('#winner');
-
-        const finalWinner = document.querySelector('final-winner');
 
         function getComputerChoice() {
             // Selects random choice for the computer 
@@ -79,25 +86,6 @@
 
             return computerChoice; 
         }
-
-        // function getPlayerChoice() {
-        //     prompts player to choose between rock, paper or scissors
-        //     let keepGoing = true;
-        //     while (keepGoing) {
-        //         let playerChoice = prompt('Choose between rock, paper or scissors: ', '').toLowerCase();
-        //         if ((playerChoice === 'rock') || (playerChoice === 'paper') || (playerChoice === 'scissors')) {
-        //             console.log('player: ' + playerChoice);
-        //             keepGoing = false;
-        //             return playerChoice;
-        //         }
-        //         else {
-        //             alert('Please type an appropriate response');
-        //         }
-        //     }
-            
-            
-
-        // }
 
         function playRound(playerSelection, computerSelection) {
             // determines if draw, win or lose 
@@ -140,16 +128,13 @@
                 winnerText.textContent = `Computers wins! ${computerSelection} beats ${playerSelection}!`;
                 console.log(`Computer wins! ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}!`);
             }
+            
+            game(playerWinOrLose);
 
             return playerWinOrLose;
         }
 
-        function game() {
-            // plays the game and keeps the score. First to 5 will win.
-            let playerScore = 0;
-            let computerScore = 0;
-    
-            // let playerWinOrLose = playRound(playerSelection, computerSelection);
+        function game(playerWinOrLose) {
             if (playerWinOrLose === true) {
                 playerScore++;
             }
@@ -159,7 +144,8 @@
             console.log("Player Score: " + playerScore);
             console.log("Computer Score: " + computerScore);
 
-            
+            playerScoreCount.textContent = `Player Score: ${playerScore}`;
+            computerScoreCount.textContent = `Computer Score: ${computerScore}`;
 
             if (playerScore === 5 || computerScore === 5) {
                 if (playerScore > computerScore) {
@@ -175,9 +161,6 @@
                 }
             }
         }
-
-        // game();
-
     </script>
 </body>
 </html>
