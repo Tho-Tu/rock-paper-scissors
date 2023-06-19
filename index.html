@@ -28,17 +28,18 @@
 
     <div id="scores">
         <div id="player-score">
-            player score
+            Player score:
         </div>
         <div id="computer-score">
-            computer score
+            Computer score:
         </div>
     </div>
 
-    <div id="final-winner"></div>
+    <h2 id="final-winner"></h2>
+
+    <div type="button" id="reset-button"></div>
 
     <script>
-
         // Query selectors 
         const btn1 = document.querySelector('#btn1');
         const btn2 = document.querySelector('#btn2');
@@ -52,6 +53,8 @@
         const computerScoreCount = document.querySelector('#computer-score');
 
         const finalWinner = document.querySelector('#final-winner');
+
+        const resetNode = document.querySelector('#reset-button');
 
         // plays the game and keeps the score. First to 5 will win.
         let playerScore = 0;
@@ -130,7 +133,6 @@
             }
             
             game(playerWinOrLose);
-
             return playerWinOrLose;
         }
 
@@ -147,7 +149,13 @@
             playerScoreCount.textContent = `Player Score: ${playerScore}`;
             computerScoreCount.textContent = `Computer Score: ${computerScore}`;
 
+            // first to five wins
             if (playerScore === 5 || computerScore === 5) {
+                // disables buttons
+                document.getElementById("btn1").disabled = true;
+                document.getElementById("btn2").disabled = true;
+                document.getElementById("btn3").disabled = true;
+
                 if (playerScore > computerScore) {
                     console.log("Final Result: Player wins!");
                     finalWinner.textContent = "Final Result: Player wins!";
@@ -159,8 +167,36 @@
                 else {
                     console.log("Final Result: Match Draw!");
                 }
+
+                // create reset button
+                const resetButton = document.createElement('button');
+                resetButton.textContent = 'Play again?';
+
+                resetNode.appendChild(resetButton);
+                resetButton.addEventListener('click', () => { resetAll();
+                resetButton.remove()});
             }
         }
+
+        function resetAll() {
+            document.getElementById("btn1").disabled = false;
+            document.getElementById("btn2").disabled = false;
+            document.getElementById("btn3").disabled = false;
+
+            playerText.textContent = `Player Selection`;
+            computerText.textContent = `Computer selection`;
+            winnerText.textContent = `Who wins?`;
+
+            playerScoreCount.textContent = `player score`;
+            computerScoreCount.textContent = `computer score`;
+
+            finalWinner.textContent = '';
+
+            // resets scores
+            playerScore = 0;
+            computerScore = 0;
+        }
+
     </script>
 </body>
 </html>
